@@ -3,22 +3,22 @@
         <div class="form-control" :class="{invalid: !firstName.isValid}">
             <label for="firstName">First name</label>
             <input type="text" id="firstName" v-model.trim="firstName.val">
-            <p v-if="!firstName.isValid">Firstname must not be empty</p>
+            <p v-if="!firstName.isValid" class="invalid">Firstname must not be empty</p>
         </div>
         <div class="form-control" :class="{invalid: !lastName.isValid}">
             <label for="lastName">Last name</label>
-            <input type="text" id="firstName" v-model.trim="lastName.val">
-            <p v-if="!lastName.isValid">Lastname must not be empty</p>
+            <input type="text" id="lastName" v-model.trim="lastName.val">
+            <p v-if="!lastName.isValid" class="invalid">Lastname must not be empty</p>
         </div>
         <div class="form-control" :class="{invalid: !description.isValid}">
             <label for="description">Description</label>
             <textarea rows="5" type="text" id="description" v-model.trim="description.val" />
-            <p v-if="!description.isValid">Description must not be empty</p>
+            <p v-if="!description.isValid" class="invalid">Description must not be empty</p>
         </div>
         <div class="form-control" :class="{invalid: !rate.isValid}">
             <label for="rate">Hourly rate</label>
             <input type="number" id="rate" v-model.number="rate.val">
-            <p v-if="!rate.isValid">Rate must not be empty</p>
+            <p v-if="!rate.isValid" class="invalid">Rate must be greater than 0</p>
         </div>
         <div class="form-control" :class="{invalid: !areas.isValid}">
             <h3>Areas of expertise</h3>
@@ -34,14 +34,15 @@
                 <input type="checkbox" id="career" value="career" v-model="areas.val">
                 <label for="career">Career advisory</label>
             </div>
-            <p v-if="!areas.isValid">At least one area must be picked</p>
+            <p v-if="!areas.isValid" class="invalid">At least one area must be picked</p>
         </div>
-        <p>Please fix the above errors and submit again.</p>
+        <p v-if="!formIsValid" class="invalid">Please fix the above errors and submit again.</p>
         <base-button>Register</base-button>
     </form>
 </template>
 
 <script>
+
 export default {
     emits: ['save-data'],
     data() {
@@ -72,34 +73,44 @@ export default {
     methods: {
         validateForm() {
             this.formIsValid = true;
+            this.firstName.isValid = true;
+            this.lastName.isValid = true;
+            this.description.isValid = true;
+            this.rate.isValid = true;
+            this.areas.isValid = true;
+
             if (this.firstName.val === '') {
                 this.firstName.isValid = false;
                 this.formIsValid = false;
             }
             if (this.lastName.val === '') {
-                this.firstName.isValid = false;
+                this.lastName.isValid = false;
                 this.formIsValid = false;
             }
             if (this.description.val === '') {
-                this.firstName.isValid = false;
+                this.description.isValid = false;
                 this.formIsValid = false;
             }
             if (!this.rate.val || this.rate.val < 0) {
-                this.firstName.isValid = false;
+                this.rate.isValid = false;
                 this.formIsValid = false;
             }
             if (this.areas.val.length === 0) {
                 this.areas.isValid = false;
                 this.formIsValid = false;
             }
+            return false;
         },
         submitForm() {
+            // Validate the form.
+            this.validateForm();
+
             const formData = {
-                first: this.firstName,
-                last: this.lastName,
-                desc: this.description,
-                rate: this.rate,
-                areas: this.areas,
+                first: this.firstName.val,
+                last: this.lastName.val,
+                desc: this.description.val,
+                rate: this.rate.val,
+                areas: this.areas.val,
             }
 
             if (!this.formIsValid) {
@@ -162,6 +173,10 @@ h3 {
 
 .invalid label {
   color: red;
+}
+
+.invalid p {
+    color: red;
 }
 
 .invalid input,
