@@ -31,7 +31,7 @@ export default {
         }
     },
     created() {
-        this.selectedCoach = this.$store.getters['coaches/coaches'].find(coach => coach.id === this.id);
+        this.selectedCoach = this.$store.getters['coaches/coaches'].find(coach => coach.id === this.$route.params.id);
     },
     computed: {
         fullName() {
