@@ -17,7 +17,7 @@
         </div>
         <div class="form-control" :class="{invalid: !rate.isValid}">
             <label for="rate">Hourly rate</label>
-            <input type="number" id="rate" v-model.number="rate.val" @blur="clearValidity('rate')">
+            <input type="number" id="rate" v-model.number="rate.val" @blur="validateField('rate')">
             <p v-if="!rate.isValid" class="invalid">Rate must be greater than 0</p>
         </div>
         <div class="form-control" :class="{invalid: !areas.isValid}">
