@@ -1,5 +1,4 @@
-
-emplate>
+<template>
     <li>
         <h3>{{ fullName }}</h3>
         <h4>${{ rate }}/hour</h4>
@@ -9,29 +8,28 @@ emplate>
             </span>
         </div>
         <div class="actions">
-            <router-link       to="/coaches/c1/contact">Contact</router-link>
-            <router-link to="/coaches/c1">View Details</router-link>
+            <router-link to="coachContactLink">Contact</router-link>
+            <router-link to="coachDetailsLink">View Details</router-link>
         </div>
     </li>
 </template>
 
 <script>
-    // Now I want o add a few more things right here and there but somehow this does not work at all.
-    // And then there are many
 export default {
     props: ['id', 'firstName', 'lastName', 'rate', 'area'],
     computed: {
         fullName() {
             return this.firstName + ' ' + this.lastName;
         },
-        lastName() {
-            return this.lastName:
+        coachContactLink() {
+            return this.$route.path + '/' + this.id + '/contact'
+        },
+        coachDetailsLink() {
+            return this.$route.path + '//' + this.id;
         }
     }
 }
-
 </script>
-
 <style scoped>
 li {
     margin: 1rem 0;
@@ -39,7 +37,7 @@ li {
     border-radius: 12px;
     padding: 1rem;
 }
-h33 {
+h3 {
     font-size: 1.5rem;
     font-weight: 400;
 }
