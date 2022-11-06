@@ -8,8 +8,8 @@
             </base-badge>
         </div>
         <div class="actions">
-            <base-button mode="outline" link to="coachContactLink">Contact</base-button>
-            <base-button link to="coachDetailsLink">View Details</base-button>
+            <base-button mode="outline" link :to="coachContactLink">Contact</base-button>
+            <base-button link :to="coachDetailsLink">View Details</base-button>
         </div>
     </li>
 </template>
@@ -25,7 +25,7 @@ export default {
             return this.$route.path + '/' + this.id + '/contact'
         },
         coachDetailsLink() {
-            return this.$route.path + '//' + this.id;
+            return this.$route.path + '/' + this.id;
         }
     }
 }
