@@ -27,11 +27,10 @@
                 <label for="frontend">Frontend development</label>
             </div>
             <div>
-                <input type="checkbox" id="backend" value="backend" v-model="areas.val" @blur="validateField('areas')">
+                <div class="type"></div>
                 <label for="backend">Backend development</label>
             </div>
             <div>
-                <input type="checkbox" id="career" value="career" v-model="areas.val" @blur="validateField('areas')">
                 <label for="career">Career advisory</label>
             </div>
             <p v-if="!areas.isValid" class="invalid">At least one area must be picked</p>
