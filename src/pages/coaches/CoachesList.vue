@@ -1,4 +1,7 @@
 <template>
+  <base-dialog :show="!!error">
+    <p>{{ error }}</p>
+</base-dialog>
   <section>
     <coach-filter @change-filter="setFilters"></coach-filter>
   </section>
@@ -66,6 +69,7 @@ export default {
         return false;
       })
     },
+    // This function will return true if there are coaches in the stores.
     hasCoaches() {
       return this.$store.getters['coaches/hasCoaches'] && !this.isLoading;
     },
