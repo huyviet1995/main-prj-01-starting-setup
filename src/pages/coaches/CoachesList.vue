@@ -1,7 +1,7 @@
 <template>
   <base-dialog :show="!!error" @close="handleError">
     <p>{{ error }}</p>
-</base-dialog>
+  </base-dialog>
   <section>
     <coach-filter @change-filter="setFilters"></coach-filter>
   </section>
