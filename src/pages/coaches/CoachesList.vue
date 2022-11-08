@@ -1,5 +1,5 @@
 <template>
-  <base-dialog :show="!!error">
+  <base-dialog :show="!!error" @close="handleError">
     <p>{{ error }}</p>
 </base-dialog>
   <section>
@@ -87,6 +87,9 @@ export default {
       }
       this.isLoading = false;
     }
+  },
+  handleError() {
+    this.error = null;
   },
   created(){
     this.loadCoaches();

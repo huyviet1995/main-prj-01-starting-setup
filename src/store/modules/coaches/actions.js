@@ -36,7 +36,7 @@ export default {
             throw error;
         }
 
-        const coaches = context.getters.coaches;
+        const coaches = [];
 
         for (const key in responseData) {
             const coach = {
