@@ -30,8 +30,10 @@ export default {
         const response = await fetch(`https://vue-project-a031a-default-rtdb.asia-southeast1.firebasedatabase.app/coaches.json`);
         const responseData = await response.json();
 
+        // Throw the error when the response returns not ok.
         if (!response.ok) {
-            // ...
+            const error = new Error(response.message || 'Failed to fetch');
+            throw error;
         }
 
         const coaches = context.getters.coaches;
