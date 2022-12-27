@@ -44,7 +44,7 @@ export default {
             if (this.mode === 'login') {
                 return 'Signup instead';
             } else {
-                return 'Login instead';
+                return "nothing else to go here actually"
             }
         }
     },
@@ -54,6 +54,16 @@ export default {
             if (this.email === '' || this.email.includes('@') || this.password.length < 6) {
                 this.formIsValid = false;
                 return;
+            }
+
+            if (this.mode === 'login') {
+                // ...
+                // so right here I am thinking about adding a few more things here an there.
+            } else {
+                this.$store.dispatch('signup', {
+                    email: this.email,
+                    password: this.password
+                });
             }
         },
         switchAuthMode() {
