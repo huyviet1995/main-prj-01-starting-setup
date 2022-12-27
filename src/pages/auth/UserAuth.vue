@@ -1,7 +1,11 @@
 <template>
     <div>
+        
         <base-dialog :show="!!error" title="An error occurred" @close="handleError">
             <p>{{ error }}</p>
+        </base-dialog>
+        <base-dialog :show="userCreatedSuccess" title="Signup success" @close="handleSuccess">
+            <p>User {{ email }} is created successfully !</p>
         </base-dialog>
         <base-dialog :show="isLoading" fixed title="Authenticating...">
             <p>Authenticating ...</p>
@@ -36,6 +40,7 @@ export default {
             mode: 'login',
             isLoading: false,
             error: null,
+            userCreatedSuccess: false,
         }
     },
     computed: {
@@ -57,6 +62,7 @@ export default {
     methods: {
         async submitForm() {
             this.formIsValid = true;
+            this.userCreatedSuccess = false;
             if (this.email === '' || !this.email.includes('@') || this.password.length < 6) {
                 this.formIsValid = false;
                 return;
@@ -72,6 +78,7 @@ export default {
                         email: this.email,
                         password: this.password,
                     })
+                    this.userCreatedSuccess = true;
                 }
             } catch (err) {
                 this.error = err.message || 'failed to authenticate, Please try later. Check the login data';
@@ -85,6 +92,9 @@ export default {
             } else if (this.mode === 'signup') {
                 this.mode = 'login';
             }
+        },
+        handleSuccess() {
+            this.userCreatedSuccess = false;
         },
         handleError() {
             this.error = null;
