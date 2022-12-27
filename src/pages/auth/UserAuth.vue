@@ -1,7 +1,7 @@
 <template>
     <base-card>
-        <form>
-            <div class="form-control" @submit.prevent="submitForm">
+        <form @submit.prevent="submitForm">
+            <div class="form-control">
                 <label for="email">E-mail</label>
                 <input type="email" id="email" v-model.trim="email">
             </div>
@@ -44,14 +44,14 @@ export default {
             if (this.mode === 'login') {
                 return 'Signup instead';
             } else {
-                return "nothing else to go here actually"
+                return "Login instead"
             }
         }
     },
     methods: {
         submitForm() {
             this.formIsValid = true;
-            if (this.email === '' || this.email.includes('@') || this.password.length < 6) {
+            if (this.email === '' || !this.email.includes('@') || this.password.length < 6) {
                 this.formIsValid = false;
                 return;
             }
