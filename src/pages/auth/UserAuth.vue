@@ -7,6 +7,9 @@
         <base-dialog :show="userCreatedSuccess" title="Signup success" @close="handleSuccess">
             <p>User {{ email }} is created successfully !</p>
         </base-dialog>
+        <base-dialog :show="userAuthenticatedSuccess" title="Login success" @close="handleSuccess">
+            <p>User {{ email }} is authenticated successfully !</p>
+        </base-dialog>
         <base-dialog :show="isLoading" fixed title="Authenticating...">
             <p>Authenticating ...</p>
         </base-dialog>
@@ -41,6 +44,7 @@ export default {
             isLoading: false,
             error: null,
             userCreatedSuccess: false,
+            userAuthenticatedSuccess: false,
         }
     },
     computed: {
@@ -70,14 +74,17 @@ export default {
 
             this.isLoading = true;
 
+            const authPayload = {
+                email: this.email,
+                password: this.password,
+            }
+
             try {
                 if (this.mode === 'login') {
-                    // ...
+                    await this.$store.dispatch('login', authPayload)
+                    this.userAuthenticatedSuccess = true;
                 } else {
-                    await this.$store.dispatch('signup', {
-                        email: this.email,
-                        password: this.password,
-                    })
+                    await this.$store.dispatch('signup', authPayload)
                     this.userCreatedSuccess = true;
                 }
             } catch (err) {
@@ -95,6 +102,7 @@ export default {
         },
         handleSuccess() {
             this.userCreatedSuccess = false;
+            this.userAuthenticatedSuccess = false;
         },
         handleError() {
             this.error = null;
