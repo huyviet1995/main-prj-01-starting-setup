@@ -27,11 +27,25 @@ export default {
             throw error;
         }
 
+        localStorage.setItem('token', responseData.idToken);
+        localStorage.setItem('userId', responseData.localId);
+
         context.commit('setUser', {
             token: responseData.idToken,
             userId: responseData.localId,
             tokenExpiration: responseData.expiredIn,
         });
+    },
+    tryLogin(context) {
+        const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('userId');
+        if (token && userId) {
+            context.commit('setUser', {
+                token,
+                userId,
+                tokenExpiration: null,
+            });
+        }
     },
     logout(context) {
         context.commit('setUser', {
